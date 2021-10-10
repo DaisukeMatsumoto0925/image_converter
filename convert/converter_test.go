@@ -1,9 +1,19 @@
 package convert
 
 import (
+	"path/filepath"
 	"reflect"
 	"testing"
 )
+
+func getAbs(t *testing.T, path string) string {
+	abs, err := filepath.Abs(path)
+	if err != nil {
+		t.Errorf("could not get abs path %v", path)
+	}
+	return abs
+
+}
 
 func TestNewConverter(t *testing.T) {
 	type args struct {
@@ -22,8 +32,8 @@ func TestNewConverter(t *testing.T) {
 			name: "png to jpg",
 			args: args{srcDir: "./images", dstDir: "./result", bExt: "png", aExt: "jpg"},
 			want: &Converter{
-				srcDirPath: "/Users/matsumotodaisuke/projects/public/image_converter/convert/images",
-				dstDirPath: "/Users/matsumotodaisuke/projects/public/image_converter/convert/result",
+				srcDirPath: getAbs(t, "./images"),
+				dstDirPath: getAbs(t, "result"),
 				bExt:       "png",
 				aExt:       "jpg",
 			},
@@ -33,12 +43,40 @@ func TestNewConverter(t *testing.T) {
 			name: "jpg to png",
 			args: args{srcDir: "./images", dstDir: "./result", bExt: "jpg", aExt: "png"},
 			want: &Converter{
-				srcDirPath: "/Users/matsumotodaisuke/projects/public/image_converter/convert/images",
-				dstDirPath: "/Users/matsumotodaisuke/projects/public/image_converter/convert/result",
+				srcDirPath: getAbs(t, "./images"),
+				dstDirPath: getAbs(t, "./result"),
 				bExt:       "jpg",
 				aExt:       "png",
 			},
 			wantErr: false,
+		},
+		{
+			name: "abs to rel path",
+			args: args{
+				srcDir: getAbs(t, "./images"),
+				dstDir: "./result",
+				bExt:   "jpg",
+				aExt:   "png",
+			},
+			want: &Converter{
+				srcDirPath: getAbs(t, "./images"),
+				dstDirPath: getAbs(t, "./result"),
+				bExt:       "jpg",
+				aExt:       "png",
+			},
+			wantErr: false,
+		},
+		{
+			name:    "from gif",
+			args:    args{srcDir: "./images", dstDir: "./result", bExt: "gif", aExt: "png"},
+			want:    nil,
+			wantErr: true,
+		},
+		{
+			name:    "to gif",
+			args:    args{srcDir: "./images", dstDir: "./result", bExt: "png", aExt: "gif"},
+			want:    nil,
+			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
