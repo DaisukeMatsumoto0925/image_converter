@@ -19,6 +19,7 @@ func main() {
 	flag.Parse()
 
 	cvt, err := convert.NewConverter(*srcDir, *dstDir, *bExt, *aExt)
+	fmt.Println(cvt)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
