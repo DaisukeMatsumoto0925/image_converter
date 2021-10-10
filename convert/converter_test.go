@@ -19,13 +19,24 @@ func TestNewConverter(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "正常系",
+			name: "png to jpg",
 			args: args{srcDir: "./images", dstDir: "./result", bExt: "png", aExt: "jpg"},
 			want: &Converter{
 				srcDirPath: "/Users/matsumotodaisuke/projects/public/image_converter/convert/images",
 				dstDirPath: "/Users/matsumotodaisuke/projects/public/image_converter/convert/result",
 				bExt:       "png",
 				aExt:       "jpg",
+			},
+			wantErr: false,
+		},
+		{
+			name: "jpg to png",
+			args: args{srcDir: "./images", dstDir: "./result", bExt: "jpg", aExt: "png"},
+			want: &Converter{
+				srcDirPath: "/Users/matsumotodaisuke/projects/public/image_converter/convert/images",
+				dstDirPath: "/Users/matsumotodaisuke/projects/public/image_converter/convert/result",
+				bExt:       "jpg",
+				aExt:       "png",
 			},
 			wantErr: false,
 		},
