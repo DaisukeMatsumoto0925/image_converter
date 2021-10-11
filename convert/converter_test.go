@@ -7,6 +7,7 @@ import (
 )
 
 func getAbs(t *testing.T, path string) string {
+	t.Helper()
 	abs, err := filepath.Abs(path)
 	if err != nil {
 		t.Errorf("could not get abs path %v", path)
