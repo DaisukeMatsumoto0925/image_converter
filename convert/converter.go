@@ -77,6 +77,7 @@ func (c *Converter) Do() error {
 
 			if contains(flagToExtNames[c.bExt], filepath.Ext(path)) {
 				err := c.convert(path)
+				fmt.Println((path))
 				if err != nil {
 					return err
 				}

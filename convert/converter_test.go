@@ -109,7 +109,39 @@ func TestConverter_convert(t *testing.T) {
 		args    args
 		wantErr bool
 	}{
-		// TODO: Add test cases.
+		{
+			name: "png to jpg",
+			fields: fields{
+				srcDirPath: getAbs(t, "../testdata/images"),
+				dstDirPath: getAbs(t, "../testdata/result"),
+				bExt:       "png",
+				aExt:       "jpg",
+			},
+			args:    args{path: getAbs(t, "../testdata/images/1.png")},
+			wantErr: false,
+		},
+		{
+			name: "jpg to png",
+			fields: fields{
+				srcDirPath: getAbs(t, "../testdata/images"),
+				dstDirPath: getAbs(t, "../testdata/result"),
+				bExt:       "jpg",
+				aExt:       "png",
+			},
+			args:    args{path: getAbs(t, "../testdata/images/1.png")},
+			wantErr: false,
+		},
+		{
+			name: "fail path",
+			fields: fields{
+				srcDirPath: getAbs(t, "../testdata/images"),
+				dstDirPath: getAbs(t, "../testdata/result"),
+				bExt:       "jpg",
+				aExt:       "png",
+			},
+			args:    args{path: getAbs(t, "./testdata/images/1.png")},
+			wantErr: true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
